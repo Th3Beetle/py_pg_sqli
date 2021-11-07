@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+    web: 
+        build: ./app
+        command: flask run --host=0.0.0.0
+        ports:
+            - 5000:5000
+        links:
+            - db
+        environment:
+            - FLASK_APP=/app/main.py
+            - FLASK_ENVIRONMENT=development
+            - LC_ALL=C.UTF-8
+            - LANG=C.UTF-8
+    db:
+        build: ./postgres
+        restart: always
+        environment:
+            - POSTGRES_HOST_AUTH_METHOD=trust
